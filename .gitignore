@@ -1,0 +1,14 @@
+# No extension
+*
+!*.*
+!*/
+
+#temp files
+temp.cpp
+test.cpp
+
+# Executables
+*.exe
+*.out
+
+*.dSYM
