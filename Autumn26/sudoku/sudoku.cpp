@@ -61,16 +61,7 @@ int mfind(int n, const std::vector<int>& v){
 bool check_sequence(const std::vector<int>& v){
     for (int i=1; i<=v.size(); i++)
     {
-        bool contains = false;
-        for (int j=0; j<v.size(); j++)
-        {
-            if (v[j] == i)
-            {
-                contains = true;
-                break;
-            }
-        }
-        if (!contains)
+        if (mfind(i, v) == -1)
         {
             return false;
         }
@@ -89,7 +80,11 @@ bool check_sequence(const std::vector<int>& v){
 // r: 3; in: 1 2 3 4 4 1 2 76 4 4 4 1 9 4 1 -7 | out: 9 4 1 -7
 // note that this function must (meaningfully) use function twod_to_oned
 void get_row(int r, const std::vector<int>& in, std::vector<int>& out){
-    // write your code here
+    int rowlen = std::sqrt(in.size());
+    for (int col = 0; col < rowlen; col++)
+    {
+        out.push_back(in[twod_to_oned(r, col, rowlen)]);
+    }
 }
 
 // function get_col
@@ -98,7 +93,11 @@ void get_row(int r, const std::vector<int>& in, std::vector<int>& out){
 // c: 0; in: 1 2 3 4 4 1 2 76 4 4 4 1 9 4 1 -7 | out: 1 4 4 9
 // note that this function must (meaningfully) use function twod_to_oned
 void get_col(int c, const std::vector<int>& in, std::vector<int>& out){
-    // write your code here
+    int rowlen = std::sqrt(in.size());
+    for (int row = 0; row < rowlen; row++)
+    {
+        out.push_back(in[twod_to_oned(row, c, rowlen)]);
+    }
 }
 
 // function get_subsq
@@ -112,7 +111,15 @@ void get_col(int c, const std::vector<int>& in, std::vector<int>& out){
 // subs: 3; in: 1 2 3 4 4 1 2 76 4 4 4 1 9 4 1 -7 | out: 4 1 1 -7
 // note that this function must (meaningfully) use function twod_to_oned
 void get_subsq(int subs, const std::vector<int>& in, std::vector<int>& out){
-    // write your code here
+    int rowlen = std::sqrt(in.size());
+    int subslen = std::sqrt(rowlen);
+    for (int row = 0; row < subslen; row++)
+    {
+        for (int col = 0; col < subslen; col++)
+        {
+            out.push_back(in[twod_to_oned(row, col, rowlen)]);
+        }
+    }
 }
 
 // function valid_sudoku 
