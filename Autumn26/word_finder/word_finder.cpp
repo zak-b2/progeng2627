@@ -23,8 +23,8 @@ void init_solution(
 // returns the index of the first letter of word in string
 // returns -1 if string does not contain word
 int word_position_in_string(
-    std::string string,
-    std::string word
+    const std::string& string,
+    const std::string& word
 )
 {
     int lettersFound = 0;
@@ -37,6 +37,10 @@ int word_position_in_string(
                 return i-lettersFound;
             }
             lettersFound++;
+        }
+        else if (string[i] == word[0])
+        {
+            lettersFound = 1;
         }
         else
         {
@@ -66,7 +70,7 @@ std::string get_column(
 bool find_word_vertically(
     const std::vector<std::string>& grid, 
     std::vector<std::string>& solution,
-    std::string word
+    const std::string& word
 )
 {
     for (int i = 0; i < grid[0].size(); i++)
@@ -91,7 +95,7 @@ bool find_word_vertically(
 bool find_word_horizontally(
     const std::vector<std::string>& grid, 
     std::vector<std::string>& solution,
-    std::string word
+    const std::string& word
 )
 {
     for (int i = 0; i < grid.size(); i++)
@@ -112,18 +116,29 @@ bool find_word_horizontally(
 
 // iterates over all words, and searches for them in grid
 // if the word is found neither horizontally or vertically, the word is added to the not_found vector
+// edge case: if grid is empty, skip grid searching and set not_found = words
 void find_words(
     const std::vector<std::string>& grid, 
     const std::vector<std::string>& words,
     std::vector<std::string>& solution,
     std::vector<std::string>& not_found
 ){
+    solution.clear();
+    not_found.clear();
     init_solution(grid, solution);
-    for (int i = 0; i < words.size(); i++)
+
+    if (grid.empty() || grid[0].empty())
     {
-        if (! (find_word_horizontally(grid, solution, words[i]) || find_word_vertically(grid, solution, words[i])))
+        not_found = words;
+    }
+    else
+    {
+        for (int i = 0; i < words.size(); i++)
         {
-            not_found.push_back(words[i]);
+            if (! (find_word_horizontally(grid, solution, words[i]) || find_word_vertically(grid, solution, words[i])))
+            {
+                not_found.push_back(words[i]);
+            }
         }
     }
 }
