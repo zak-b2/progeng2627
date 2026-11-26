@@ -125,7 +125,6 @@ void find_words(
 ){
     solution.clear();
     not_found.clear();
-    init_solution(grid, solution);
 
     if (grid.empty() || grid[0].empty())
     {
@@ -133,6 +132,7 @@ void find_words(
     }
     else
     {
+        init_solution(grid, solution);
         for (int i = 0; i < words.size(); i++)
         {
             if (! (find_word_horizontally(grid, solution, words[i]) || find_word_vertically(grid, solution, words[i])))
