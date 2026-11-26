@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 
+// fills solution with # to match the size of grid
 void init_solution(
     const std::vector<std::string>& grid, 
     std::vector<std::string>& solution
@@ -19,15 +20,17 @@ void init_solution(
     }
 }
 
+// returns the index of the first letter of word in string
+// returns -1 if string does not contain word
 int word_position_in_string(
-    std::string row,
+    std::string string,
     std::string word
 )
 {
     int lettersFound = 0;
-    for (int i = 0; i < row.size(); i++)
+    for (int i = 0; i < string.size(); i++)
     {
-        if (row[i] == word[lettersFound])
+        if (string[i] == word[lettersFound])
         {
             if (lettersFound == word.size()-1)
             {
@@ -43,6 +46,7 @@ int word_position_in_string(
     return -1;
 }
 
+// returns a specific column in grid as a string
 std::string get_column(
     const std::vector<std::string>& grid,
     int columnNum
@@ -56,6 +60,9 @@ std::string get_column(
     return column;
 }
 
+// searches for a given word accross all columns in grid
+// updates solution if the word is found
+// returns true if the word is found, otherwise returns false
 bool find_word_vertically(
     const std::vector<std::string>& grid, 
     std::vector<std::string>& solution,
@@ -78,6 +85,9 @@ bool find_word_vertically(
     return false;
 }
 
+// searches for a given word accross all rows in grid
+// updates solution if the word is found
+// returns true if the word is found, otherwise returns false
 bool find_word_horizontally(
     const std::vector<std::string>& grid, 
     std::vector<std::string>& solution,
@@ -100,6 +110,8 @@ bool find_word_horizontally(
     return false;
 }
 
+// iterates over all words, and searches for them in grid
+// if the word is found neither horizontally or vertically, the word is added to the not_found vector
 void find_words(
     const std::vector<std::string>& grid, 
     const std::vector<std::string>& words,
@@ -116,6 +128,7 @@ void find_words(
     }
 }
 
+// test case
 int main(){
 
     std::vector<std::string> grid = {
