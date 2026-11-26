@@ -38,12 +38,9 @@ int word_position_in_string(
             }
             lettersFound++;
         }
-        else if (string[i] == word[0])
-        {
-            lettersFound = 1;
-        }
         else
         {
+            i -= lettersFound;
             lettersFound = 0;
         }
     }
@@ -116,7 +113,7 @@ bool find_word_horizontally(
 
 // iterates over all words, and searches for them in grid
 // if the word is found neither horizontally or vertically, the word is added to the not_found vector
-// edge case: if grid is empty, skip grid searching and set not_found = words
+// no check for if grid or any words are empty, as guidelines assume valid and meaningful inputs
 void find_words(
     const std::vector<std::string>& grid, 
     const std::vector<std::string>& words,
@@ -126,19 +123,12 @@ void find_words(
     solution.clear();
     not_found.clear();
 
-    if (grid.empty() || grid[0].empty())
+    init_solution(grid, solution);
+    for (int i = 0; i < words.size(); i++)
     {
-        not_found = words;
-    }
-    else
-    {
-        init_solution(grid, solution);
-        for (int i = 0; i < words.size(); i++)
+        if (! (find_word_horizontally(grid, solution, words[i]) || find_word_vertically(grid, solution, words[i])))
         {
-            if (! (find_word_horizontally(grid, solution, words[i]) || find_word_vertically(grid, solution, words[i])))
-            {
-                not_found.push_back(words[i]);
-            }
+            not_found.push_back(words[i]);
         }
     }
 }
