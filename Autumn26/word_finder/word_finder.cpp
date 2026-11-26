@@ -40,6 +40,7 @@ int word_position_in_string(
         }
         else
         {
+            // reset i to a previous value to account for possible partial matches overlapping
             i -= lettersFound;
             lettersFound = 0;
         }
